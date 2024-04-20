@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Specific classes ###
+/src/main/java/com/fleming/weatherApp/Secret.java

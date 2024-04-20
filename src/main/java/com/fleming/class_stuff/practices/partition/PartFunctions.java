@@ -29,7 +29,9 @@ public class PartFunctions {
         return res;
     }
 
-    public static BigDecimal GetAverage(String[] input) { return new BigDecimal(GetSum(input)).divide(new BigDecimal(String.valueOf(input.length)), 20, RoundingMode.UNNECESSARY); }
+    public static BigDecimal GetAverage(String[] input) {
+        return new BigDecimal(GetSum(input)).divide(new BigDecimal(String.valueOf(input.length)), 20, RoundingMode.UNNECESSARY);
+    }
 
     public static BigInteger GetMin(String[] input) {
         BigInteger MIN = new BigInteger(input[0]);
