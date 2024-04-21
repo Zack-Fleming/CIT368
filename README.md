@@ -21,3 +21,6 @@ The tool I use was Qodana, an SCA tool that is prebundled with the Intellij IDE.
 
 #### Software Bill of Materials (SBOM)
 
+#### Secrets
+
+The weather application uses a class that is not version conttrolled, to store the API key and build the connection string. 
