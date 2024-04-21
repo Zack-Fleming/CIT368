@@ -17,7 +17,9 @@ This assignment was done in two sets of commits. One where we just make a basic 
 
 #### Static Code Analysis (SCA\SAST)
 
-The tool I use was Qodana, an SCA tool that is prebundled with the Intellij IDE. 
+The tool I use was Qodana, an SCA tool that is prebundled with the Intellij IDE. The tool only found some performace issues, where I was usung concatination when appending to a `StringBuilder` object. The fix was to use multple `append()` calls instead of the concatination. Other warning incluse the use of some depricated functions and contructors, when using `Gson`. 
+
+Qodana did not find any vulnerable dependencies as well. 
 
 #### Software Bill of Materials (SBOM)
 
