@@ -28,7 +28,11 @@ public class WeatherWrapper
             valid = true;
             System.out.println("input valid...");
         }
-        else System.out.println("input not valid...");
+        else
+        {
+            valid = false;
+            System.out.println("input invalid...");
+        }
     }
 
     public void makeConnection(String input)
