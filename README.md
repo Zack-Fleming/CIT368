@@ -23,6 +23,9 @@ Qodana did not find any vulnerable dependencies as well.
 
 #### Software Bill of Materials (SBOM)
 
+This application only has one dependency, called `Gson`. This is Google's Java JSON library, that allows the parsing and creation of JSON Objects or data. The dependency graph can be seen through the built-in system from GitHub, here: [CIT368 dependency Graph](https://github.com/Zack-Fleming/CIT368/network/dependencies)
+
+
 #### Secrets
 
-The weather application uses a class that is not version conttrolled, to store the API key and build the connection string. 
+The weather application uses a class that is not version conttrolled, to store the API key and build the connection string. As stated above, a previous version of the software leaked the API key. This has been solved by rotating the keys. 
