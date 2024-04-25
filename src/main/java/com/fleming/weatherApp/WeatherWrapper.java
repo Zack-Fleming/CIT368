@@ -6,6 +6,8 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 public class WeatherWrapper
 {
@@ -23,12 +25,11 @@ public class WeatherWrapper
 
     public void validateInput(String input)
     {
-        if (Security.validateInput(input))
-        {
-            valid = true;
-            System.out.println("input valid...");
-        }
-        else System.out.println("input not valid...");
+        valid = Security.validateInput(input);
+        String message = valid ? "input valid..." : "input not valid...";
+        System.out.println(message);
+        if (valid) WeatherAppMain.LOG.getLogger().log(new LogRecord(Level.INFO, message));
+        else WeatherAppMain.LOG.getLogger().log(new LogRecord(Level.WARNING, message));
     }
 
     public void makeConnection(String input)
@@ -42,13 +43,14 @@ public class WeatherWrapper
 
             connected = true;
             System.out.println("connection successful...");
+            WeatherAppMain.LOG.getLogger().log(new LogRecord(Level.INFO, "Connection successful..."));
         }
-        catch (Exception e) { throw new RuntimeException(e); }
+        catch (Exception e) { WeatherAppMain.LOG.getLogger().log(new LogRecord(Level.SEVERE, "Connection unsuccessful...\n" + e.getLocalizedMessage())); }
     }
 
     public void closeConnection()
     {
-        connection.disconnect();
+        if (connection != null) connection.disconnect();
         connected = false;
     }
 
@@ -69,17 +71,18 @@ public class WeatherWrapper
             scanner.close();
             rawData = temp.toString();
         }
-        catch (Exception e) { throw new RuntimeException(e); }
+        catch (Exception e) { WeatherAppMain.LOG.getLogger().log(new LogRecord(Level.SEVERE, e.getLocalizedMessage())); }
     }
 
     public void getFormattedData()
     {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        JsonParser parser = new JsonParser();
-        JsonObject root = parser.parse(rawData).getAsJsonObject();
+        JsonObject root = JsonParser.parseString(rawData).getAsJsonObject();
 
         if (root.has("error"))
+        {
             System.out.println("Error: " + root.getAsJsonObject("error").get("message").getAsString());
+            WeatherAppMain.LOG.getLogger().log(new LogRecord(Level.WARNING, "Error: " + root.getAsJsonObject("error").get("message").getAsString()));
+        }
         else
         {
             JsonObject  loc = root.getAsJsonObject("location");
@@ -89,19 +92,20 @@ public class WeatherWrapper
             JsonArray   days = forecast.getAsJsonArray("forecastday");
 
             StringBuilder weather = new StringBuilder();
-            weather.append("3 day forecast for: " + name.getAsString() + ", " + region.getAsString() + "\n");
+            weather.append("3 day forecast for: ").append(name.getAsString()).append(", ").append(region.getAsString()).append("\n");
 
             for (JsonElement day : days)
             {
                 JsonObject temp = day.getAsJsonObject();
-                weather.append("\ton the day of " + temp.get("date").getAsString() + ":\n");
+                weather.append("\ton the day of ").append(temp.get("date").getAsString()).append(":\n");
                 JsonObject dayData = temp.getAsJsonObject("day");
-                weather.append("\t\tCondition: " + dayData.getAsJsonObject("condition").get("text").getAsString() + "\n");
-                weather.append("\t\tHigh temp: " + dayData.get("maxtemp_f").getAsString() + "\u00b0F\n");
-                weather.append("\t\tLow temp : " + dayData.get("mintemp_f").getAsString() + "\u00b0F\n");
+                weather.append("\t\tCondition: ").append(dayData.getAsJsonObject("condition").get("text").getAsString()).append("\n");
+                weather.append("\t\tHigh temp: ").append(dayData.get("maxtemp_f").getAsString()).append("°F\n");
+                weather.append("\t\tLow temp : ").append(dayData.get("mintemp_f").getAsString()).append("°F\n");
             }
 
             System.out.println(weather);
+            WeatherAppMain.LOG.getLogger().log(new LogRecord(Level.INFO,"\n" + weather));
         }
     }
 }
