@@ -34,18 +34,26 @@ public class WeatherWrapper
 
     public void makeConnection(String input)
     {
-        try
+        if (valid)
         {
-            URL url = URI.create(Secret.getConnectionString(input)).toURL();
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.connect();
+            try
+            {
+                URL url = URI.create(Secret.getConnectionString(input)).toURL();
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.connect();
 
-            connected = true;
-            System.out.println("connection successful...");
-            WeatherAppMain.LOG.getLogger().log(new LogRecord(Level.INFO, "Connection successful..."));
+                connected = true;
+                System.out.println("connection successful...");
+                WeatherAppMain.LOG.getLogger().log(new LogRecord(Level.INFO, "Connection successful..."));
+            }
+            catch (Exception e) { WeatherAppMain.LOG.getLogger().log(new LogRecord(Level.SEVERE, "Connection unsuccessful...\n" + e.getLocalizedMessage())); }
         }
-        catch (Exception e) { WeatherAppMain.LOG.getLogger().log(new LogRecord(Level.SEVERE, "Connection unsuccessful...\n" + e.getLocalizedMessage())); }
+        else
+        {
+            System.out.println("connection unsuccessful...");
+            WeatherAppMain.LOG.getLogger().log(new LogRecord(Level.WARNING, "connection unsuccessful..."));
+        }
     }
 
     public void closeConnection()
