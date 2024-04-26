@@ -23,9 +23,16 @@ Qodana did not find any vulnerable dependencies as well.
 
 #### Software Bill of Materials (SBOM)
 
-This application only has one dependency, called `Gson`. This is Google's Java JSON library, that allows the parsing and creation of JSON Objects or data. The dependency graph can be seen through the built-in system from GitHub, here: [CIT368 dependency Graph](https://github.com/Zack-Fleming/CIT368/network/dependencies)
+This application uses three dependencies: `Gson`, `junit`, and `junit-jupiter`. `Gson` is Google's Java JSON library, that allows the parsing and creation of JSON Objects or data. both `junit` and `junit-jupiter` re libraries for unit testing in Java. The dependency graph can be seen through the built-in system from GitHub, here: [CIT368 dependency Graph](https://github.com/Zack-Fleming/CIT368/network/dependencies)
 
 
 #### Secrets
 
 The weather application uses a class that is not version conttrolled, to store the API key and build the connection string. As stated above, a previous version of the software leaked the API key. This has been solved by rotating the keys. 
+
+
+### Unit Testing
+
+This application has a few unit tests for input and API connection validation. The tests for input validation test the utalized regex for length, format, and character set of the input. The tests of the API connection, tests rather the application only tries to connect with the API if it has valid data. The output of the tests is shown below.
+
+![Output of the unit tests](unit_test_output.png)
