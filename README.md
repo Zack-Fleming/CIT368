@@ -23,6 +23,12 @@ Qodana did not find any vulnerable dependencies as well.
 
 #### Software Bill of Materials (SBOM)
 
+| Dependency | Package | Version | Maven Link | Github Link |
+|------------|---------|---------|------------|-------------|
+| Gson | com.google.code.gson | 2.10.1 | [Gson](https://mvnrepository.com/artifact/com.google.code.gson/gson) | [google/gson](https://github.com/google/gson) |
+| Junit | junit | RELEASE | [Junit](https://mvnrepository.com/artifact/junit) | [junit-team/junit4](https://github.com/junit-team/junit4) |
+| junit-jupiter | org.junit.jupiter | RELEASE | [Junit - Jupiter](https://mvnrepository.com/artifact/junit) | [junit-team/junit5](https://github.com/junit-team/junit5) |
+
 This application uses three dependencies: `Gson`, `junit`, and `junit-jupiter`. `Gson` is Google's Java JSON library, that allows the parsing and creation of JSON Objects or data. both `junit` and `junit-jupiter` re libraries for unit testing in Java. The dependency graph can be seen through the built-in system from GitHub, here: [CIT368 dependency Graph](https://github.com/Zack-Fleming/CIT368/network/dependencies)
 
 
